@@ -21,7 +21,6 @@ public class DocumentSimilarityReducer extends Reducer<Text, Text, Text, Text> {
                 docs.add(docName);
             }
 
-            // Track which words each document has
             if (!documentWords.containsKey(docName)) {
                 documentWords.put(docName, new HashSet<>());
             }
@@ -31,7 +30,7 @@ public class DocumentSimilarityReducer extends Reducer<Text, Text, Text, Text> {
 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
-        // Now calculate similarity for all document pairs
+        // Now calculating similarity for all document pairs
         List<String> docNames = new ArrayList<>(documentWords.keySet());
 
         for (int i = 0; i < docNames.size(); i++) {
@@ -42,15 +41,15 @@ public class DocumentSimilarityReducer extends Reducer<Text, Text, Text, Text> {
                 Set<String> words1 = documentWords.get(doc1);
                 Set<String> words2 = documentWords.get(doc2);
 
-                // Calculate intersection
+                // Calculating intersection
                 Set<String> intersection = new HashSet<>(words1);
                 intersection.retainAll(words2);
 
-                // Calculate union
+                // Calculating union
                 Set<String> union = new HashSet<>(words1);
                 union.addAll(words2);
 
-                // Calculate Jaccard similarity
+                // Calculating Jaccard similarity
                 double similarity = union.size() > 0 ?
                         (double) intersection.size() / union.size() : 0.0;
 
